@@ -1,0 +1,46 @@
+    
+        <div class="clearfix"></div>
+        <footer>
+            <div class="container-fluid">
+                <p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+                
+            </div>
+        </footer>
+
+    </div>
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+    <script src="__APP_JQUERY__/jquery.min.js"></script>
+    {if condition="isset($isUpload)&&$isUpload==1"}
+    <script src="__APP_BOOTSTRAP__/js/fileinput.js"></script>
+    <script src="__APP_BOOTSTRAP__/js/fileinput_locale_zh.js"></script>
+    {/if}
+    <script src="__APP_BOOTSTRAP__/js/bootstrap.min.js"></script>
+    <script src="__APP_STATIC_VENDOR__/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="__APP_STATIC_VENDOR__/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+    <script src="__APP_STATIC_VENDOR__/chartist/js/chartist.min.js"></script>
+    <script src="__APP_STATIC_ADMIN_JS__/klorofil-common.js"></script>
+    {eq name="$isForm" value="1"}
+    <!--  Form Related -->
+    <script src="__APP_STATIC_VENDOR__/validation/validate.min.js"></script> <!-- jQuery Form Validation Library -->
+    <script src="__APP_STATIC_VENDOR__/validation/validationEngine.min.js"></script> <!-- jQuery Form Validation Library - requirred with above js -->
+    <script src="__APP_BOOTSTRAP__/js/bootstrap-colorpicker.js"></script>
+    <script src="__APP_STATIC_VENDOR__/js/fileupload.min.js"></script> 
+    <!-- File Upload -->
+    <!-- Text Editor -->
+    <script type='text/javascript' src='__APP_STATIC_VENDOR__/kindeditor/kindeditor.js'></script>
+    <script charset="utf-8" src="__APP_STATIC_VENDOR__/kindeditor/lang/zh_CN.js"></script> 
+    <script charset="utf-8" src="__APP_STATIC_VENDOR__/kindeditor/plugins/code/prettify.js"></script> 
+    <script type="text/javascript" src="__APP_STATIC_ADMIN_JS__/{:strtolower(request()->controller())}/add.js"></script>
+    {notin name=":request()->action()" value="add,edit"}
+    <script type="text/javascript" src="__APP_STATIC_ADMIN_JS__/{:strtolower(request()->controller())}/{:strtolower(request()->action())}.js"></script>
+    {/notin}
+    {/eq}
+    {eq name="$hasScript" value='1'}
+    <script type="text/javascript" src="__APP_STATIC_ADMIN_JS__/{:strtolower(request()->controller())}/{:strtolower(request()->action())}.js"></script>
+    {/eq}
+    <!-- All JS functions -->
+    <script src="__APP_STATIC_ADMIN_JS__/functions.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="admin_name" class="col-md-2 control-label">管理员名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[admin_user_name]" class="form-control input-sm validate[required,minSize[2],maxSize[20]]" id="admin_name" placeholder="请输入管理员名称" value="{:isset($editData['admin_user_name']) ? $editData['admin_user_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_pass_word" class="col-md-2 control-label">管理员密码</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[admin_pass_word]" class="form-control input-sm validate[minSize[2],maxSize[50]]" id="admin_pass_word" placeholder="请输入管理员密码" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_salt" class="col-md-2 control-label">附加字符串</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[admin_salt]" class="form-control input-sm validate[required,minSize[2],maxSize[10]]" id="admin_salt" placeholder="请输入附加字符串" value="{:isset($editData['admin_salt']) ? $editData['admin_salt'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_email" class="col-md-2 control-label">管理员邮箱</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[admin_email]" class="form-control input-sm validate[required,custom[email],minSize[2],maxSize[50]]" id="admin_email" placeholder="请输入管理员邮箱" value="{:isset($editData['admin_email']) ? $editData['admin_email'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_email" class="col-md-2 control-label">所属角色</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="cat_id" name="data[role_id]">
+                                    <option value="0">请选择所属角色</option>
+                                    {volist name="roleData" id="val"}
+                                    <option value="{$val['id']}" {:isset($editData['role_id']) && ($editData['role_id']==$val['id']) ? 'selected="selected"' : ''}>{$val['role_name']}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_lock" class="col-md-2 control-label">是否锁定</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio">
+                                    <input name="data[is_lock]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio">
+                                    <input name="data[is_lock]" value="1" type="radio" {:isset($editData['is_lock'])&&$editData['is_lock']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

@@ -1,0 +1,22 @@
+{/* 头部模板 */}
+{include file='layout/header' /}
+{// 左侧导航栏}
+{include file='layout/nav' /}
+		<!-- Content -->
+        <!-- MAIN -->
+		<div class="main">
+			<!-- MAIN CONTENT -->
+			<div class="main-content">
+				<div class="container-fluid">
+					{// breadcrumb}
+					{include file='layout/breadcrumb' /}
+		        	{__CONTENT__}
+		        </div>
+		        <!-- CONTAINER-FLUID END -->
+		    </div>
+		    <!-- MAIN-CONTENT END -->
+        </div>
+		<!-- END MAIN -->
+{/* 底部模板 */}
+{include file='layout/footer' /}
+

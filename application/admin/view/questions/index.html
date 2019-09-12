@@ -1,0 +1,99 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										{volist name="typeListArr" id="value"}
+										<a href="{:url('add')}?type_id={$key}"><span class="label label-primary">添加{$value}</span></a> 
+										{/volist}
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<form action="{:url('index')}" method="post">
+										<div class="row form-group" style="margin-bottom: 25px;">
+			                    			<div class="col-md-1">
+												<i class="glyphicon glyphicon-search text-center center-block" style="height: 34px;line-height: 34px;"></i>
+			                    			</div>
+			                    			<div class="col-md-3">
+												<select name="data[type_id]" id="searchLevelId" class="form-control">
+													<!-- <option value="0">所有类型</option> -->
+													{volist name="typeList" id="val"}
+				                                    <option value="{$val['id']}" {:isset($searchList['type_id']) && $searchList['type_id']==$val['id'] ? 'selected="selected"' : ''}>
+				                                    {$val['type_name']}</option>
+				                                    {/volist}
+												</select>
+			                    			</div>
+			                    			<div class="col-md-2">
+												<select name="data[cat_id]" id="searchCatId" class="form-control">
+													<option value="0">所有科目</option>
+													{volist name="catList" id="cat"}
+				                                    <option value="{$cat['id']}" {:isset($searchList['cat_id']) && $searchList['cat_id']==$cat['id'] ? 'selected="selected"' : ''}>
+				                                    {$cat['cat_name']}</option>
+				                                    {/volist}
+												</select>
+			                    			</div>
+			                    			<div class="col-md-2">
+												<select name="data[level_id]" id="searchLevelId" class="form-control">
+													<option value="0">所有难度</option>
+													{volist name="levelList" id="val"}
+				                                    <option value="{$val['id']}" {:isset($searchList['level_id']) && $searchList['level_id']==$val['id'] ? 'selected="selected"' : ''}>
+				                                    {$val['level_name']}</option>
+				                                    {/volist}
+												</select>
+			                    			</div>
+			                    			<div class="col-md-2">
+												<input type="text" name="data[keywords]" class="form-control" id="searchPartsKeywords" value="{:isset($searchList['keywords']) && $searchList['keywords'] ? $searchList['keywords'] : ''}" />
+			                    			</div>
+			                    			<div class="col-md-1">
+			                    				<input type="hidden" name="search" value="1">
+												<input type="submit" value="搜索" class="btn btn-primary" id="searchPartsGoodsBtn">
+			                    			</div>
+				                    	</div>                    	
+									</form>	                    	
+			                    	<!-- 搜索框end -->
+									<form action="{:url('delall')}" method="post">
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-1"><input type="checkbox" id="allChk"></th>
+													<th class="col-md-1">#</th>
+													<th class="col-md-5">题目</th>
+													<th class="col-md-1">科目</th>
+													<th class="col-md-1">类型</th>
+													<th class="col-md-1">难度</th>
+													<th class="col-md-1">分数</th>
+													<th class="col-md-1">管理</th>
+												</tr>
+											</thead>
+											<tbody>
+												{volist name="listData" id='value'}
+												<tr>
+													<td><input type="checkbox" name="delId[]" class="allChkVal" value="{$value['id']}"></td>
+													<td>{$value['id']}</td>
+													<td><div style="white-space: nowrap;text-overflow: ellipsis;">{$value['question_title']}</div></td>
+													<td>{$value->getCat->cat_name ? $value->getCat->cat_name : '--'}</td>
+													<td>{$typeListArr[$value['type_id']]}</td>
+													<td>{$value->getLevel->level_name ? $value->getLevel->level_name : '--'}</td>
+													<td>{$value['score']}</td>
+													<td><a href="{:url('edit?id='.$value["id"].'&type_id='.$value['type_id'])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"].'&type_id='.$value['type_id'])}"><span class="label label-danger">删除</span></a></td>
+												</tr>
+												{/volist}
+											</tbody>
+										</table>
+										<div class="form-group">
+				                            <div class="col-center-block">
+				                            	<input type="hidden" name="type_id" value="{$type_id}">
+				                                <button type="submit" class="btn btn-info btn-sm m-t-10" style="margin-top: -4px;">确定</button>
+				                            </div>
+				                        </div>
+									</form>
+								</div>
+								<div class="panel-footer">
+									<!-- 分页 -->
+									<div class="media text-center">
+										{$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

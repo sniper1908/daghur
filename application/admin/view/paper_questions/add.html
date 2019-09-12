@@ -1,0 +1,86 @@
+ 				<link href="__APP_BOOTSTRAP__/css/bootstrap-colorpicker.css" rel="stylesheet">
+ 				<style type="text/css">
+					/*#attachWrap , #attachFile , #attachInput {
+						display: none;
+					}*/
+ 				</style>
+ 				<!-- <link href="__APP_BOOTSTRAP__/css/htmleaf-demo.css" rel="stylesheet"> -->
+ 				<!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                	<div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form action="{:url($searchAction)}?paper_id={$paper_id}&type_id={$type_id}" method="post">
+						<div class="row form-group" style="margin-bottom: 25px;">
+                			<div class="col-md-1">
+								<i class="glyphicon glyphicon-search text-center center-block" style="height: 34px;line-height: 34px;"></i>
+                			</div>
+                			<div class="col-md-3">
+								<select name="data[cat_id]" id="searchCatId" class="form-control">
+									<option value="0">所有科目</option>
+									{volist name="catList" id="cat"}
+                                    <option value="{$cat['id']}" {:isset($searchList['cat_id']) && $searchList['cat_id']==$cat['id'] ? 'selected="selected"' : ''}>
+                                    {$cat['cat_name']}</option>
+                                    {/volist}
+								</select>
+                			</div>
+                			<div class="col-md-3">
+								<select name="data[level_id]" id="searchLevelId" class="form-control">
+									<option value="0">所有难度</option>
+									{volist name="levelList" id="val"}
+                                    <option value="{$val['id']}" {:isset($searchList['level_id']) && $searchList['level_id']==$val['id'] ? 'selected="selected"' : ''}>
+                                    {$val['level_name']}</option>
+                                    {/volist}
+								</select>
+                			</div>
+                			<div class="col-md-3">
+								<select name="data[tag_id]" id="searchTagId" class="form-control">
+									<option value="0">所有标签</option>
+									{volist name="tagList" id="val"}
+                                    <option value="{$val['id']}" {:isset($searchList['tag_id']) && $searchList['tag_id']==$val['id'] ? 'selected="selected"' : ''}>
+                                    {$val['tag_name']}</option>
+                                    {/volist}
+								</select>
+                			</div>
+                			<div class="col-md-2">
+                				<input type="hidden" name="search" value="1">
+                				<input type="hidden" name="data[type_id]" value="{$type_id}">
+								<input type="submit" value="搜索" class="btn btn-primary" id="searchPartsGoodsBtn">
+                			</div>
+                    	</div>
+					</form>	                    	
+                	<!-- 搜索框end -->
+                	{notempty name="listData"}
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                    	<div id="myTabContent" class="tab-content">
+                    		<div class="tab-pane fade in active" id="base">	                   
+		                        <div class="form-group">
+		                        	{volist name="listData" id="val"}
+		                        	<div class="col-md-2" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">
+		                        		<input type="checkbox" name="question_id[]" value="{$val['id']}" id="qid_{$val['id']}" {:isset($questionsId)&&in_array($val['id'],$questionsId) ? 'checked="checked"' : ''} /> 
+		                            	<label for="qid_{$val['id']}" class="control-label" title="{$val['question_title']}">
+											{$val['question_title']}
+		                            	</label>
+		                        	</div>
+		                        	{/volist}
+		                        </div>
+		                    </div>
+		                    <!-- tab-pane-base-end -->
+                    	</div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" id="test_id" value="{$id}">
+                				<input type="hidden" name="data[paper_id]" value="{$paper_id}">
+                				<input type="hidden" name="data[q_type_id]" value="{$type_id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                    {/notempty}
+                    {empty name="listData"}
+                    暂无数据
+                    {/empty}
+                </div>

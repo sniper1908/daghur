@@ -1,0 +1,42 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('dictionary/index')}"><span class="label label-primary">返回词典列表</span></a> 
+										<a href="{:url('add')}?dict_id={$dict_id}"><span class="label label-primary">添加数据</span></a>
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<table class="table table-striped table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-1"><input type="checkbox" id="allChk"></th>
+												<th class="col-md-4">词汇</th>
+												<th class="col-md-2">方言</th>
+												<th class="col-md-4">音频</th>
+												<th class="col-md-1">管理</th>
+											</tr>
+										</thead>
+										<tbody>
+											{volist name="listData" id='value'}
+											<tr>
+												<td><input type="checkbox" name="wordId[]" class="allChkVal" value="{$value['id']}"></td>
+												<td>{$word_name[0]}</td>
+												<td>{$dialect[$value['dialect']]}</div></td>
+												<td>{$value['word_voice']}</td>
+												<td><a href="{:url('edit?dict_id='.$dict_id.'&id='.$value["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									<!-- 分页 -->
+									<div class="media text-center">
+										{$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

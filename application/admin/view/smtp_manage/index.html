@@ -1,0 +1,99 @@
+                <!-- Horizontal -->
+                <meta charset="utf-8">
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url('change')}">
+                        <div class="form-group">
+                            <label for="is_smtp" class="col-md-2 control-label">邮件服务</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_smtp]" value="1" type="radio" checked="checked">
+                                    <span><i></i>采用其他的 SMTP 服务 </span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_smtp]" value="0" type="radio" {:isset($editData['is_smtp'])&&$editData['is_smtp']!=1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>采用服务器内置的 Mail 服务</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_ssl" class="col-md-2 control-label">邮件服务器是否要求加密连接(SSL)</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_ssl]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_ssl]" value="1" type="radio" {:isset($editData['is_ssl'])&&$editData['is_ssl']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="server_address" class="col-md-2 control-label">发送邮件服务器地址(SMTP)</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[server_address]" class="form-control input-sm validate[minSize[2],maxSize[50]]" id="server_address" placeholder="请输入邮件服务器地址" value="{:isset($editData['server_address']) ? $editData['server_address'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="server_port" class="col-md-2 control-label">端口号</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[server_port]" class="form-control input-sm validate[required,minSize[2],maxSize[30]]" id="server_port" placeholder="请输入端口号" value="{:isset($editData['server_port']) ? $editData['server_port'] : '25'}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_account" class="col-md-2 control-label">邮件发送帐号</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[email_account]" class="form-control input-sm validate[required,minSize[2]]" id="email_account" placeholder="请输入邮件发送帐号" value="{:isset($editData['email_account']) ? $editData['email_account'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_account_password" class="col-md-2 control-label">帐号密码</label>
+                            <div class="col-md-10">
+                                <input type="password" name="data[email_account_password]" class="form-control input-sm validate[minSize[2],maxSize[100]]" id="email_account_password" placeholder="请输入帐号密码" value="{:isset($editData['email_account_password']) ? $editData['email_account_password'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_reply_address" class="col-md-2 control-label">邮件回复地址</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[email_reply_address]" class="form-control input-sm validate[required,minSize[2]]" id="email_reply_address" placeholder="请输入邮件回复地址" value="{:isset($editData['email_reply_address']) ? $editData['email_reply_address'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_charset" class="col-md-2 control-label">邮件编码</label>
+                            <div class="col-md-10">
+                                {foreach $charsetData as $k=>$val}
+                                <label class="fancy-radio2 radio-inline-block">
+                                    <input name="data[email_charset]" value="{$k}" type="radio" {:isset($editData['email_charset'])&&$editData['email_charset']==$k || (!isset($editData['email_charset']) && $k=='utf8') ? 'checked="checked"' : ''}>
+                                    <span><b style="font-weight: normal;font-size: 13px;">{$val}</b></span>
+                                </label>
+                                {/foreach}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="test_address" class="col-md-2 control-label">邮件地址</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="test_address" class="form-control input-sm2" id="test_address" placeholder="请输入测试邮件地址">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary" id="sendTestEmail">发送测试邮件</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

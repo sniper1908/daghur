@@ -1,0 +1,101 @@
+ 				<link href="__APP_BOOTSTRAP__/css/bootstrap-colorpicker.css" rel="stylesheet">
+ 				<style type="text/css">
+					/*#attachWrap , #attachFile , #attachInput {
+						display: none;
+					}*/
+ 				</style>
+ 				<!-- <link href="__APP_BOOTSTRAP__/css/htmleaf-demo.css" rel="stylesheet"> -->
+ 				<!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                	<ul id="myTab" class="nav nav-tabs">
+						<!-- <li class="active"><a href="#site" data-toggle="tab">网站信息</a></li>
+						<li><a href="#base" data-toggle="tab">基本设置</a></li>
+						<li><a href="#show" data-toggle="tab">显示设置</a></li>
+						<li><a href="#progress" data-toggle="tab">购物流程</a></li>
+						<li><a href="#goods" data-toggle="tab">商品显示设置</a></li> -->
+						{volist name="configData" id="parent" key='i'}
+						<li class="{eq name="$i" value="1" }active{/eq}"><a href="#{$parent['input_attribute']}" data-toggle="tab">{$parent['input_name']}</a></li>
+						{/volist}
+                	</ul>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                    	<div id="myTabContent" class="tab-content">
+                    		{for start='0' end="$configParentCount" name="loopConfigi"}
+                    		<div class="tab-pane fade in {eq name='$loopConfigi' value='0'}active{/eq}" id="{$configData[$loopConfigi]['input_attribute']}">
+                    		{eq name="$configData[$loopConfigi]['is_show']" value='1'}
+                    			{volist name="$configData[$loopConfigi]['children']" id='child'}
+                    			<div class="form-group">
+		                            <label for="{$child['input_attribute']}" class="col-md-2 control-label">{$child['input_name']}</label>
+		                            <div class="col-md-10">
+		                            	{switch name="$child['input_type']"}
+			                            	{case value='text'}
+			                                	<input type="text" name="data[{$child['id']}]" class="form-control input-sm" id="{$child['input_attribute']}" placeholder="请输入{$child['input_name']}" value="{:isset($child['input_value']) ? $child['input_value'] : ''}">
+			                                {/case}
+			                                {case value='password'}
+			                                	<input type="password" name="data[{$child['id']}]" class="form-control input-sm" id="{$child['input_attribute']}" placeholder="请输入{$child['input_name']}" value="{:isset($child['input_value']) ? $child['input_value'] : ''}">
+			                                {/case}
+			                                {case value='textarea'}
+			                                	<textarea name="data[{$child['id']}]" class="form-control auto-size input-sm" id="{$child['input_attribute']}" placeholder="请输入{$child['input_name']}">{:isset($child['input_value']) ? $child['input_value'] : ''}</textarea>
+			                                {/case}
+			                                {case value='file'}
+			                                	<input type="file" name="{$child['input_attribute']}" />
+			                                	<input type="hidden" name="fileName[{$child['input_attribute']}]" value="{$child['store_dir']}">
+			                                	<input type="hidden" name="file[{$child['input_attribute']}][id]" value="{$child['id']}">
+			                                	<!-- <input type="file" name="file[{$child['input_attribute']}]" /> -->
+			                                	{if condition="$child['input_value']"}<div class="input-desc" style="font-size: 12px; color: #666; margin: 10px; margin-bottom: 0;color:orangered;">[文件已上传]</div>{/if}
+			                                {/case}
+			                                {case value='radio'}
+			                                	{php}
+			                                		$radioList = $radioList2 = [];
+			                                		$radioList = explode('|',$child['input_range']);
+			                                		foreach($radioList as $radioK=>$radioV){
+			                                			$radioVList = [];
+			                                			$radioVList = explode('::',$radioV);
+			                                			$radioList2[$radioK][0] = $radioVList[0];
+			                                			$radioList2[$radioK][1] = $radioVList[1];
+			                                		}
+			                                	{/php}
+			                                	{foreach $radioList2 as $k=>$v}
+					                                <label class="fancy-radio radio-inline-block">
+					                                    <input name="data[{$child['id']}]" value="{$v[0]}" type="radio" {:isset($child['input_value'])&&$child['input_value']==$v[0] ? 'checked="checked"' : ''}>
+					                                    <span><i></i>{$v[1]}</span>
+					                                </label>
+					                            {/foreach}
+			                                {/case}
+			                                {case value='select'}
+			                                <select class="form-control input-sm m-b-10" id="cat_id" name="data[{$child['id']}]">
+			                                <!-- <select class="form-control input-sm m-b-10" id="cat_id" name="data[{$child['input_attribute']}]"> -->
+			                                	<option value="0">请选择{$child['input_name']}</option>
+			                                	{php}
+			                                		$selectList = $selectList2 = [];
+			                                		$selectList = explode('|',$child['input_range']);
+			                                		foreach($selectList as $selectK=>$selectV){
+			                                			$selectVList = [];
+			                                			$selectVList = explode('::',$selectV);
+			                                			$selectList2[$selectK][0] = $selectVList[0];
+			                                			$selectList2[$selectK][1] = $selectVList[1];
+			                                		}
+			                                	{/php}
+			                                	{foreach $selectList2 as $k=>$v}
+			                                	<option value="{$v[0]}" {:isset($child['input_value'])&&$child['input_value']==$v[0] ? 'selected="selected"' : ''}>{$v[1]}</option>
+			                                	{/foreach}
+			                                </select>
+			                                {/case}
+		                            	{/switch}
+		                            	{:isset($child['input_description'])&&$child['input_description'] ? '<div class="input-desc" style="font-size: 12px; color: #666; margin: 10px; margin-bottom: 0;">'.$child['input_description'].'</div>' : ''}
+		                            </div>
+		                        </div>
+		                        {/volist}
+                    		{/eq}
+                    		</div>
+		                    <!-- tab-pane#{$configData[$loopConfigi]['input_attribute']} end -->
+                    		{/for}
+                    	</div>
+                    	<!-- tab-content end -->
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>

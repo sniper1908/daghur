@@ -1,0 +1,64 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('add')}?page={$page}"><span class="label label-primary">添加数据</span></a>
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<form action="{:url('delall')}" method="post">
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th><input type="checkbox" id="allChk"></th>
+													<th>#</th>
+													<th class="article-title">名称</th>
+													<th>代码</th>
+													<th>所属分类</th>
+													<th>管理</th>
+												</tr>
+											</thead>
+											<tbody>
+												{volist name="listData" id='value'}
+												<tr>
+													<td><input type="checkbox" name="delId[]" class="allChkVal" value="{$value['id']}"></td>
+													<td>{$value['id']}</td>
+													<td>{$value['permission_name']}</td>
+													<td>{$value['permission_name_code']}</td>
+													<td>{$value['parent_name']}</td>
+													<td><a href="{:url('edit?id='.$value["id"])}?page={$page}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+												</tr>
+												{notempty name="value['children']"}
+												{volist name="value['children']" id='val'}
+												<tr>
+													<td><input type="checkbox" name="delId[]" class="allChkVal" value="{$val['id']}"></td>
+													<td>{$val['id']}</td>
+													<td>{$val['permission_name']}</td>
+													<td>{$val['permission_name_code']}</td>
+													<td>{$val['parent_name']}</td>
+													<td><a href="{:url('edit?id='.$val["id"])}?page={$page}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$val["id"])}"><span class="label label-danger">删除</span></a></td>
+												</tr>
+												{/volist}
+												{/notempty}
+												{/volist}
+											</tbody>
+										</table>
+										<div class="form-group">
+				                            <div class="col-center-block">
+				                                <button type="submit" class="btn btn-info btn-sm m-t-10">批量删除</button>
+				                            </div>
+				                        </div>
+									</form>
+								</div>
+								<div class="panel-footer">
+									
+									<!-- 分页 -->
+									<div class="media text-center">
+										{$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

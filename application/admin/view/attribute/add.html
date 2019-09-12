@@ -1,0 +1,112 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index?type_id='.$type_id)}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="attr_name" class="col-md-2 control-label">属性名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[attr_name]" class="form-control input-sm validate[required,minSize[2],maxSize[40]]" id="attr_name" placeholder="请输入属性名称" value="{:isset($editData['attr_name']) ? $editData['attr_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cat_id" class="col-md-2 control-label">商品类型</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="cat_id" name="data[cat_id]">
+                                    {foreach $goodsTypeList as $k=>$v}
+                                    <option value="{$v['id']}" {:isset($editData['cat_id'])&&$editData['cat_id']==$v['id'] || ($type_id==$v['id']) ? 'selected="selected"' : ''}>
+                                    {$v['cat_name']}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        {notempty name="attrGroupList"}
+                        <div class="form-group">
+                            <label for="attr_group" class="col-md-2 control-label">属性分组</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="attr_group" name="data[attr_group]">
+                                    {foreach $attrGroupList as $k=>$v}
+                                    <option value="{$k}" {:isset($editData['attr_group'])&&$editData['attr_group']==$k ? 'selected="selected"' : ''}>
+                                    {$v}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        {/notempty}
+                        <div class="form-group">
+                            <label for="attr_index" class="col-md-2 control-label">能否进行检索</label>
+                            <div class="col-md-10">
+                                {foreach $attrIndex as $k=>$v}
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[attr_index]" value="{$k}" type="radio" {:isset($editData['attr_index'])&&$editData['attr_index']==$k || !$k ? 'checked="checked"' : ''}>
+                                    <span><i></i>{$v}</span>
+                                </label>
+                                {/foreach}
+                                <div class="form-bottom-div">不需要该属性成为检索商品条件的情况请选择不需要检索，需要该属性进行关键字检索商品时选择关键字检索，如果该属性检索时希望是指定某个范围时，选择范围检索。</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_linked" class="col-md-2 control-label">相同属性值的商品是否关联？</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_linked]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_linked]" value="1" type="radio" {:isset($editData['is_linked'])&&$editData['is_linked']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attr_type" class="col-md-2 control-label">属性是否可选</label>
+                            <div class="col-md-10">
+                                {foreach $attrType as $k=>$v}
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[attr_type]" value="{$k}" type="radio" {:isset($editData['attr_type'])&&$editData['attr_type']==$k || !$k ? 'checked="checked"' : ''}>
+                                    <span><i></i>{$v}</span>
+                                </label>
+                                {/foreach}
+                                <div class="form-bottom-div">选择"单选/复选属性"时，可以对商品该属性设置多个值，同时还能对不同属性值指定不同的价格加价，用户购买商品时需要选定具体的属性值。选择"唯一属性"时，商品的该属性值只能设置一个值，用户只能查看该值。</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attr_input_type" class="col-md-2 control-label">属性录入方式</label>
+                            <div class="col-md-10">
+                                {foreach $inputType as $k=>$v}
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[attr_input_type]" value="{$k}" type="radio" id="attrInputType_{$k}" class="attrInputType" {:isset($editData['attr_input_type'])&&$editData['attr_input_type']==$k || !$k ? 'checked="checked"' : ''}>
+                                    <span><i></i>{$v}</span>
+                                </label>
+                                {/foreach}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="attr_values" class="col-md-2 control-label">可选值列表</label>
+                            <div class="col-md-10">
+                                <textarea name="data[attr_values]" class="form-control input-sm" id="attr_values" placeholder="请输入可选值" rows="5" {:isset($editData['attr_input_type'])&&$editData['attr_input_type']==1 ? '' : 'disabled="disabled"'}>{:isset($editData['attr_values']) ? $editData['attr_values'] : ''}</textarea>
+                                <div class="form-bottom-div">属性录入方式若为列表中选择，则属性值在此处输入，一行代表一个可选值</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort_order" class="col-md-2 control-label">排序数字</label>
+                            <div class="col-md-10">
+                                <div class="p-relative">
+                                    <input type="text" class="form-control input-sm spinner-1 spinedit validate[custom[integer],min[1]]" name="data[sort_order]" value="{:isset($editData['sort_order']) ? $editData['sort_order'] : '50'}" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

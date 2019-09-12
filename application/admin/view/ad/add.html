@@ -1,0 +1,136 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="ad_name" class="col-md-2 control-label">广告名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[ad_name]" class="form-control input-sm validate[required,minSize[2],maxSize[40]]" id="adv_name" placeholder="请输入广告名称" value="{:isset($editData['ad_name']) ? $editData['ad_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adv_id" class="col-md-2 control-label">广告位置</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="adv_id" name="data[adv_id]">
+                                    <!-- <option value="0">站外广告</option> -->
+                                    {volist name="advList" id="val"}
+                                    <option value="{$val['id']}" {:isset($editData['adv_id'])&&$editData['adv_id']==$val['id'] ? 'selected="selected"' : ''}>
+                                    {$val['adv_name']}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad_type" class="col-md-2 control-label">广告类型</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="ad_type" name="data[ad_type]">
+                                    {foreach $adType as $k=>$v}
+                                    <option value="{$k}" {:isset($editData['ad_type'])&&$editData['ad_type']==$k ? 'selected="selected"' : ''}>
+                                    {$v}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad_link" class="col-md-2 control-label">广告链接</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[ad_link]" class="form-control input-sm" id="ad_link" placeholder="请输入广告链接地址" value="{:isset($editData['ad_link']) ? $editData['ad_link'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ad_code" class="col-md-2 control-label">广告图片</label>
+                            <div class="col-md-10">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-new thumbnail small form-control"></div>
+                                    <div class="fileupload-preview form-control fileupload-exists thumbnail small"></div>
+                                    <span class="btn btn-file btn-alt btn-sm">
+                                        <span class="fileupload-new">选择图片</span>
+                                        <span class="fileupload-exists">更改</span>
+                                        <input type="file" name="upfile" />
+                                    </span>
+                                    &nbsp;&nbsp;{if condition="isset($editData['ad_code']) && $editData['ad_code']"}<img src="../{$editData['ad_code']}" width="45" height="45" data-toggle="modal" data-target="#myArticleImg" />{/if}
+                                    <a href="#" class="btn-sm btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                </div>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="myArticleImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    {:isset($editData['ad_name']) ? $editData['ad_name'] : ''}
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {if condition="isset($editData['ad_code']) && $editData['ad_code']"}<img src="../{$editData['ad_code']}" width="300" height="300" />{/if}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 模态框结束 -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="start_time" class="col-md-2 control-label">开始时间</label>
+                            <div class="col-md-10">
+                                <input type="date" name="data[start_time]" class="form-control input-sm validate[required]" id="start_time" placeholder="请选择开始时间" value="{:isset($editData['start_time']) ? date('Y-m-d',$editData['start_time']) : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="end_time" class="col-md-2 control-label">结束时间</label>
+                            <div class="col-md-10">
+                                <input type="date" name="data[end_time]" class="form-control input-sm" id="end_time" placeholder="请选择结束时间" value="{:isset($editData['end_time']) ? date('Y-m-d',$editData['end_time']) : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_man" class="col-md-2 control-label">广告联系人</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[link_man]" class="form-control input-sm validate[minSize[2],maxSize[40]]" id="link_man" placeholder="请输入广告联系人" value="{:isset($editData['link_man']) ? $editData['link_man'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_phone" class="col-md-2 control-label">联系人电话</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[link_phone]" class="form-control input-sm validate[minSize[2],maxSize[40]]" id="link_phone" placeholder="请输入联系人电话" value="{:isset($editData['link_phone']) ? $editData['link_phone'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_email" class="col-md-2 control-label">联系人Email</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[link_email]" class="form-control input-sm validate[custom[email],minSize[2],maxSize[40]]" id="link_email" placeholder="请输入联系人Email地址" value="{:isset($editData['link_email']) ? $editData['link_email'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_show" class="col-md-2 control-label">是否显示</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="1" type="radio" checked="checked">
+                                    <span><i></i>是</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="0" type="radio" {:isset($editData['is_show'])&&$editData['is_show']!=1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

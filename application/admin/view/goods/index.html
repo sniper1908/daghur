@@ -1,0 +1,129 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('goodsCategory/index')}"><span class="label label-primary">返回商品分类</span></a> 
+										<a href="{:url('add')}"><span class="label label-primary">添加数据</span></a>
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<form action="{:url('index')}" method="post">
+										<div class="row form-group" style="margin-bottom: 25px;">
+			                    			<div class="col-md-1">
+												<i class="glyphicon glyphicon-search text-center center-block" style="height: 34px;line-height: 34px;"></i>
+			                    			</div>
+			                    			<div class="col-md-3">
+												<select name="data[cat_id]" id="searchCatId" class="form-control">
+													<option value="0">所有分类</option>
+													{volist name="catTree" id="cat"}
+				                                    <option value="{$cat['id']}" {:isset($searchList['cat_id']) && $searchList['cat_id']==$cat['id'] ? 'selected="selected"' : ''}>
+				                                    |-{:str_repeat('--',$cat['level'])}{$cat['cat_name']}</option>
+				                                    {/volist}
+												</select>
+			                    			</div>
+			                    			<div class="col-md-3">
+												<select name="data['brand_id']" id="searchBrandId" class="form-control">
+													<option value="0">所有品牌</option>
+													{volist name="brandList" id="brand"}
+				                                    <option value="{$brand['id']}" {:isset($searchList['brand_id']) && $searchList['brand_id']==$brand['id'] ? 'selected="selected"' : ''}>
+				                                    {$brand['brand_name']}</option>
+				                                    {/volist}
+												</select>
+			                    			</div>
+			                    			<div class="col-md-1">
+			                    				<select name="data[recommend]" id="searchRecommend" class="form-control">
+			                    					<option value="0">全部</option>
+			                    					<option value="is_best" {:isset($searchList['recommend']) && $searchList['recommend']=='is_best' ? 'selected="selected"' : ''}>精品</option>
+			                    					<option value="is_new" {:isset($searchList['recommend']) && $searchList['recommend']=='is_new' ? 'selected="selected"' : ''}>新品</option>
+			                    					<option value="is_hot" {:isset($searchList['recommend']) && $searchList['recommend']=='is_hot' ? 'selected="selected"' : ''}>热销</option>
+			                    					<option value="is_promote" {:isset($searchList['recommend']) && $searchList['recommend']=='is_promote' ? 'selected="selected"' : ''}>特价</option>
+			                    					<option value="all_type" {:isset($searchList['recommend']) && $searchList['recommend']=='all_type' ? 'selected="selected"' : ''}>全部推荐</option>
+			                    				</select>
+			                    			</div>		                    			
+			                    			<div class="col-md-1">
+			                    				<select name="data[is_on_sale]" id="searchIsOnSale" class="form-control">
+			                    					<option value="-1">全部</option>
+			                    					<option value="1" {:isset($searchList['is_on_sale']) && $searchList['is_on_sale']==1 ? 'selected="selected"' : ''}>上架</option>
+			                    					<option value="0" {:isset($searchList['is_on_sale']) && $searchList['is_on_sale']==0 ? 'selected="selected"' : ''}>下架</option>
+			                    				</select>
+			                    			</div>
+			                    			<div class="col-md-2">
+												<input type="text" name="data[keywords]" class="form-control" id="searchPartsKeywords" value="{:isset($searchList['keywords']) && $searchList['keywords'] ? $searchList['keywords'] : ''}" />
+			                    			</div>
+			                    			<div class="col-md-1">
+			                    				<input type="hidden" name="search" value="1">
+												<input type="submit" value="搜索" class="btn btn-primary" id="searchPartsGoodsBtn">
+			                    			</div>
+				                    	</div>                    	
+									</form>	                    	
+			                    	<!-- 搜索框end -->
+									<form action="{:url('changeType')}" method="post">
+										<table class="table table-striped table-hover">
+											<thead>
+												<tr>
+													<th class="col-md-1"><input type="checkbox" id="allChk"></th>
+													<th class="col-md-1">#</th>
+													<th class="col-md-1">名称</th>
+													<th class="col-md-1">价格</th>
+													<th class="col-md-1">上架</th>
+													<th class="col-md-1">精品</th>
+													<th class="col-md-1">热销</th>
+													<th class="col-md-1">新品</th>
+													<th class="col-md-1">库存</th>
+													<th class="col-md-1">管理</th>
+												</tr>
+											</thead>
+											<tbody>
+												{volist name="listData" id='value'}
+												<tr>
+													<td><input type="checkbox" name="goodsId[]" class="allChkVal" value="{$value['id']}"></td>
+													<td>{$value['id']}</td>
+													<td><div style="white-space: nowrap;text-overflow: ellipsis;">{$value['goods_name']}</div></td>
+													<td>{$value['shop_price']}</td>
+													<td>{$value['is_on_sale'] ? '<i class="glyphicon glyphicon-ok" style="color: green;"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red;"></i>'}</td>
+													<td>{$value['is_best'] ? '<i class="glyphicon glyphicon-ok" style="color: green;"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red;"></i>'}</td>
+													<td>{$value['is_hot'] ? '<i class="glyphicon glyphicon-ok" style="color: green;"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red;"></i>'}</td>
+													<td>{$value['is_new'] ? '<i class="glyphicon glyphicon-ok" style="color: green;"></i>' : '<i class="glyphicon glyphicon-remove" style="color:red;"></i>'}</td>
+													<td>{$value['goods_number']}</td>
+													<td><a href="{:url('edit?id='.$value["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+												</tr>
+												{/volist}
+											</tbody>
+										</table>
+										<div class="form-group">
+				                            <div class="col-center-block">
+				                            	<select name="data[changeType]" id="changeType" class="selectpicker" style="height: 30px;line-height: 30px;border-radius: 2px;">
+													<option value="0">请选择</option>
+													<option value="trash">回收站</option>
+													<option value="on_sale">上架</option>
+													<option value="not_on_sale">下架</option>
+													<option value="best">精品</option>
+													<option value="not_best">取消精品</option>
+													<option value="new">新品</option>
+													<option value="not_new">取消新品</option>
+													<option value="hot">热销</option>
+													<option value="not_hot">取消热销</option>
+													<option value="move_to">转移到分类</option>
+				                            	</select>
+				                            	<select name="data[changeCatId]" id="changeCatId" style="height: 30px;line-height: 30px;border-radius: 2px;display: none;">
+				                            		<option value="0">所有分类</option>
+													{volist name="catTree" id="cat"}
+				                                    <option value="{$cat['id']}">
+				                                    |-{:str_repeat('--',$cat['level'])}{$cat['cat_name']}</option>
+				                                    {/volist}
+				                            	</select>
+				                                <button type="submit" class="btn btn-info btn-sm m-t-10" style="margin-top: -4px;">确定</button>
+				                            </div>
+				                        </div>
+									</form>
+								</div>
+								<div class="panel-footer">
+									<!-- 分页 -->
+									<div class="media text-center">
+										{$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

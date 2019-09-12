@@ -1,0 +1,75 @@
+ 				<link href="__APP_BOOTSTRAP__/css/bootstrap-colorpicker.css" rel="stylesheet">
+ 				<style type="text/css">
+					/*#attachWrap , #attachFile , #attachInput {
+						display: none;
+					}*/
+ 				</style>
+ 				<!-- <link href="__APP_BOOTSTRAP__/css/htmleaf-demo.css" rel="stylesheet"> -->
+ 				<!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                	<div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                	<ul id="myTab" class="nav nav-tabs">
+						<li class="active"><a href="#base" data-toggle="tab">基本信息</a></li>
+                	</ul>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                    	<div id="myTabContent" class="tab-content">
+                    		<div class="tab-pane fade in active" id="base">	                   
+		                        <div class="form-group">
+		                            <label for="test_name" class="col-md-2 control-label">试卷名称</label>
+		                            <div class="col-md-10">
+		                                <textarea class="form-control auto-size input-sm validate[minSize[2],maxSize[60]]" id="test_name" name="data[test_name]" placeholder="请输入试卷名称">{:isset($editData['test_name']) ? $editData['test_name'] : ''}</textarea>
+		                            </div>
+		                        </div>	
+		                        <div class="form-group">
+		                            <label for="cat_id" class="col-md-2 control-label">科目</label>
+		                            <div class="col-md-10">
+		                                <select class="form-control input-sm m-b-10" id="cat_id" name="data[cat_id]">
+		                                	<option value="0">请选择科目</option>
+		                                    {volist name="catList" id="cat"}
+		                                    <option value="{$cat['id']}" {:isset($editData['cat_id'])&&($editData['cat_id']==$cat['id']) ? 'selected="selected"' : ''}>
+		                                    {$cat['cat_name']}</option>
+		                                    {/volist}
+		                                </select>
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="question_type" class="col-md-2 control-label">类型</label>
+		                            <div class="col-md-10">
+		                                <select class="form-control input-sm m-b-10" id="type_id" name="data[type_id]">
+		                                    <option value="0">请选择类型</option>
+		                                    {volist name="typeList" id="val"}
+		                                    <option value="{$val['id']}" {:isset($editData['type_id'])&&$editData['type_id']==$val['id'] ? 'selected="selected"' : ''}>
+		                                    {$val['type_name']}</option>
+		                                    {/volist}
+		                                </select>
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="extend_cat_id" class="col-md-2 control-label">难度</label>
+		                            <div class="col-md-10">
+		                                <select class="form-control input-sm m-b-10" id="level_id" name="data[level_id]">
+		                                    <option value="0">请选择难度水平</option>
+		                                    {volist name="levelList" id="val"}
+		                                    <option value="{$val['id']}" {:isset($editData['level_id'])&&$editData['level_id']==$val['id'] ? 'selected="selected"' : ''}>
+		                                    {$val['level_name']}</option>
+		                                    {/volist}
+		                                </select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <!-- tab-pane-base-end -->
+                    	</div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" id="test_id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>

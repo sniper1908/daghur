@@ -1,0 +1,29 @@
+							<!-- TABLE HOVER -->
+							<form class="navbar-form navbar-right" method="post" action="{:url('insert')}">
+								<div class="input-group">
+									<input type="text" name="data[region_name]" class="form-control" placeholder="请输入地区名称">
+									<input type="hidden" name="data[parent_id]" value="{$parent_id}" />
+									<input type="hidden" name="data[region_type]" value="{$region_type}" />
+									<span class="input-group-btn"><button type="submit" class="btn btn-primary">添加数据</button></span>
+								</div>
+							</form>
+                        	<div class="clearfix"></div>
+							<div class="panel">
+								<div class="panel-heading">
+								</div>
+								<div class="panel-body">
+									<table class="table table-striped2 table-hover" cellpadding="0" cellspacing="0">
+										<tbody>
+											{volist name="listData" id='value'}
+											<tr class="col-md-6" style="border-top: 1px solid #ddd;">
+												<td class="col-md-10" style="border-top: none;">{$value['region_name']}</td>
+												<td class="col-md-2" style="border-top: none;">{lt name="region_type" value='3'}<a href="{:url('index?parent_id='.$value["id"].'&region_type='.($value['region_type']+1))}"><span class="label label-primary">管理</span></a>  {/lt}<a href="{:url('del?id='.$value["id"].'&parent_id='.$value['id'].'&region_type='.($value['region_type']))}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

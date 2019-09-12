@@ -1,0 +1,79 @@
+{// login页面不用layout布局}
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html class="fullscreen-bg">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+        <title>找回密码</title>
+        <!-- VENDOR CSS -->
+        <link rel="stylesheet" href="__APP_BOOTSTRAP__/css/bootstrap.min.css">
+        <link rel="stylesheet" href="__APP_STATIC_VENDOR__/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="__APP_STATIC_VENDOR__/linearicons/style.css">
+        <link rel="stylesheet" href="__APP_STATIC_VENDOR__/chartist/css/chartist-custom.css">
+        <link rel="stylesheet" href="__APP_STATIC_VENDOR__/css/form_validation.css">
+        <!-- MAIN CSS -->
+        <link rel="stylesheet" href="__APP_STATIC_ADMIN_CSS__/main.css">
+        <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+        <link rel="stylesheet" href="__APP_STATIC_ADMIN_CSS__/demo.css">
+        <!-- ICONS -->
+        <link rel="apple-touch-icon" sizes="76x76" href="__APP_STATIC_ADMIN_IMG__/apple-icon.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="__APP_STATIC_ADMIN_IMG__/favicon.png">
+    </head>
+    <body>
+        <!-- WRAPPER -->
+        <div id="wrapper">
+            <div class="vertical-align-wrap">
+                <div class="vertical-align-middle">
+                    <div class="auth-box ">
+                        <div class="left">
+                            <div class="content">
+                                <div class="header">
+                                    <div class="logo text-center"><img src="__APP_STATIC_ADMIN_IMG__/logo-dark.png" alt="Klorofil Logo"></div>
+                                    <!-- <p class="lead">Login to your account</p> -->
+                                </div>
+                                <form class="form-auth-small" action="{:url('findPwd')}" method="post">
+                                    <div class="form-group">
+                                        <label for="signin-username" class="control-label sr-only">账号</label>
+                                        <input type="text" name="admin[admin_user_name]" class="form-control" id="signin-username" placeholder="请输入用户名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin-username" class="control-label sr-only">加密串</label>
+                                        <input type="text" name="admin[admin_salt]" class="form-control" id="signin-salt" placeholder="请输入加密串">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="signin-captcha" class="control-label sr-only">验证码</label>
+                                        <input type="text" name="captcha_admin_login" class="form-control" id="signin-captcha" placeholder="请输入验证码">
+                                    </div>
+                                    <div class="form-group">
+                                        <img id="verify_img" class="form-control2" src="{:captcha_src()}" alt="验证码" onclick="refreshVerify()" alt="点击刷新">
+                                        <!-- <br> -->
+                                        <!-- <a href="javascript:refreshVerify()">点击刷新</a> -->
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">找回密码</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="overlay"></div>
+                            <div class="content text">
+                                <h1 class="heading">Free Bootstrap dashboard template</h1>
+                                <p>by The Develovers</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END WRAPPER -->
+        <script>
+            function refreshVerify() {
+                var ts = Date.parse(new Date())/1000;
+                var img = document.getElementById('verify_img');
+                img.src = "../captcha?id="+ts;
+            }
+        </script>
+    </body>
+</html>

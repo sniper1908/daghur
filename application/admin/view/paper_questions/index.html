@@ -1,0 +1,45 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('papers/index')}"><span class="label label-success">返回试卷列表</span></a>
+										{volist name="typeListArr" id="value"}
+										<a href="{:url('add')}?paper_id={$paper_id}&type_id={$key}"><span class="label label-primary">添加{$value}</span></a> 
+										{/volist}
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-1">#</th>
+												<th class="col-md-7">题目</th>
+												<th class="col-md-2">题型</th>
+												<th class="col-md-2">管理</th>
+											</tr>
+										</thead>
+										<tbody>
+											{volist name="listData" id="value"}
+											{php}$funcName = 'getName'.$value['q_type_id'];{/php}
+											<tr>
+												<td>{$value['id']}</td>
+												<td>{$value->$funcName->question_title ? $value->$funcName->question_title : '--'}</td>
+												<td>{$typeListArr[$value['q_type_id']]}</td>
+												<td><a href="{:url('del?paper_id='.$value['paper_id'].'&type_id='.$value['q_type_id'].'&id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									
+									<!-- 分页 -->
+									<div class="media text-center">
+				                        {$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

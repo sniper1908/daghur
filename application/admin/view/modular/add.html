@@ -1,0 +1,112 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="modular_name" class="col-md-2 control-label">模块名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[modular_name]" class="form-control input-sm validate[required,minSize[2],maxSize[20]]" id="modular_name" placeholder="请输入模块名称" value="{:isset($editData['modular_name']) ? $editData['modular_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="parent_id" class="col-md-2 control-label">所属模块</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="parent_id" name="data[parent_id]">
+                                    <option value="0">请选择父级模块</option>
+                                    {volist name="tree" id="value"}
+                                    <option value="{$value['id']}" {:isset($editData['parent_id'])&&$editData['parent_id']==$value['id'] ? 'selected="selected"' : ''}>
+                                    {$value['modular_name']}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modular_name_code" class="col-md-2 control-label">模块名称代码</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[modular_name_code]" class="form-control input-sm validate[minSize[2],maxSize[20]]" id="modular_name_code" placeholder="请输入模块名称代码" value="{:isset($editData['modular_name_code']) ? $editData['modular_name_code'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modular_icon" class="col-md-2 control-label">模块图标</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[modular_icon]" class="form-control input-sm validate[minSize[2],maxSize[20]]" id="modular_icon" placeholder="请输入模块图标代码" value="{:isset($editData['modular_icon']) ? $editData['modular_icon'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modular_controller" class="col-md-2 control-label">模块控制器</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[modular_controller]" class="form-control input-sm validate[minSize[2],maxSize[20]]" id="modular_controller" placeholder="请输入模块控制器名称" value="{:isset($editData['modular_controller']) ? $editData['modular_controller'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modular_action" class="col-md-2 control-label">模块方法</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[modular_action]" class="form-control input-sm validate[minSize[2],maxSize[20]]" id="modular_action" placeholder="请输入模块方法名称" value="{:isset($editData['modular_action']) ? $editData['modular_action'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modular_action" class="col-md-2 control-label">权限代码</label>
+                            <div class="col-md-10">
+                                <select class="form-control input-sm m-b-10" id="permission_parent_id" name="permission[permission_parent_id]">
+                                    <!-- <option value="0">请选择所属权限</option> -->
+                                    {volist name="permissionParentData" id="val"}
+                                    <option value="{$val['id']}" {:isset($permissionParentId) && ($permissionParentId==$val['id']) ? 'selected="selected"' : ''}>{$val['permission_name']}</option>
+                                    {/volist}
+                                </select>
+                                <br>
+                                <select class="form-control input-sm m-b-10" id="permission_child_id" name="permission[permission_child_id]">
+                                    <option value="0">请选择所属权限</option>
+                                    {volist name="permissionChildrenData" id="val"}
+                                    <option value="{$val['id']}" {:isset($editData['permission_code']) && ($editData['permission_code']==$val['id']) ? 'selected="selected"' : ''}>{$val['permission_name']}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort_order" class="col-md-2 control-label">排序数字</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[sort_order]" class="form-control input-sm validate[required,custom[integer],min[0]]" id="sort_order" placeholder="请输入排序数字" value="{:isset($editData['sort_order']) ? $editData['sort_order'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="show_in_nav" class="col-md-2 control-label">菜单上显示</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio">
+                                    <input name="data[show_in_nav]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio">
+                                    <input name="data[show_in_nav]" value="1" type="radio" {:isset($editData['show_in_nav'])&&$editData['show_in_nav']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_lock" class="col-md-2 control-label">是否停用</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio">
+                                    <input name="data[is_lock]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio">
+                                    <input name="data[is_lock]" value="1" type="radio" {:isset($editData['is_lock'])&&$editData['is_lock']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

@@ -1,0 +1,168 @@
+
+        <!-- LEFT SIDEBAR -->
+        <div id="sidebar-nav" class="sidebar">
+            <div class="sidebar-scroll">
+                <nav>
+                    <ul class="nav">
+                        <li><a href="{:url('index/index')}" class='{if condition="request()->controller() eq 'Index'"}active{/if}'><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+                        {notempty name="menu"}
+                        {volist name='menu' id='value'}
+                        <li>
+                            <a href="#sub{$value['modular_name_code']}" data-toggle="collapse" class='collapsed {in name=":request()->controller()" value="$value['controller_name_str']"}active{/in}'><i class="{$value['modular_icon']}"></i> <span>{$value['modular_name']}</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="sub{$value['modular_name_code']}" class="collapse ">
+                                <ul class="nav">
+                                    {notempty name="$value['children']"}
+                                    {volist name='$value["children"]' id='val'}
+                                    <li><a href="{:url($val['modular_controller'].'/'.$val['modular_action'])}" class=''>{$val['modular_name']}</a></li>
+                                    {/volist}
+                                    {/notempty}
+                                </ul>
+                            </div>
+                        </li>
+                        {/volist}
+                        {/notempty}
+                        <!-- <li>
+                            <a href="#subRbac" data-toggle="collapse" class='collapsed {in name=":request()->controller()" value="Permission,Role,Admin,AdminLog"}active{/in}'><i class="fa fa-cog"></i> <span>权限管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subRbac" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('permission/index')}" class=''>权限列表</a></li>
+                                    <li><a href="{:url('permission/add')}" class="">添加权限</a></li>
+                                    <li><a href="{:url('role/index')}" class=''>角色列表</a></li>
+                                    <li><a href="{:url('role/add')}" class="">添加角色</a></li>
+                                    <li><a href="{:url('admin/index')}" class=''>管理员列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加管理员</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subModular" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Modular"}active{/in}"><i class="fa fa-table"></i> <span>模块管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subModular" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('modular/index')}" class=''>模块列表</a></li>
+                                    <li><a href="{:url('modular/add')}" class="">添加模块</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subSite" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="WebsiteSet"}active{/in}"><i class="fa fa-pencil"></i> <span>网站设置</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subSite" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>权限列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加权限</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subUsers" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="User"}active{/in}"><i class="lnr lnr-user"></i> <span>会员管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subUsers" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('user/index')}" class=''>会员列表</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subGoods" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Goods,GoodsCat"}active{/in}"><i class="fa fa-tasks"></i> <span>商品管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subGoods" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('goods/index')}" class=''>商品列表</a></li>
+                                    <li><a href="{:url('goods/add')}" class="">添加商品</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subArticles" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Article,ArticleCat"}active{/in}"><i class="fa fa-bars"></i> <span>内容管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subArticles" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('article_cat/index')}" class=''>分类列表</a></li>
+                                    <li><a href="{:url('article_cat/add')}" class="">添加分类</a></li>
+                                    <li><a href="{:url('article/index')}" class="">文章列表</a></li>
+                                    <li><a href="{:url('article/add')}" class="">添加文章</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subAds" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Ads,Advertising"}active{/in}"><i class="fa fa-star"></i> <span>广告管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subAds" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('advertising/index')}" class=''>广告位列表</a></li>
+                                    <li><a href="{:url('advertising/add')}" class="">添加广告位</a></li>
+                                    <li><a href="{:url('ads/index')}" class=''>广告列表</a></li>
+                                    <li><a href="{:url('ads/add')}" class="">添加广告</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subPromotion" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Promotion"}active{/in}"><i class="fa fa-exchange"></i> <span>促销管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPromotion" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>促销列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加促销</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subPlugs" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Plugs"}active{/in}"><i class="fa fa-plug"></i> <span>插件工具</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPlugs" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>插件列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加插件</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subWechat" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Wechat"}active{/in}"><i class="fa fa-wechat"></i> <span>微信管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subWechat" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>权限列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加权限</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subOrders" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Orders"}active{/in}"><i class="fa fa-flag"></i> <span>订单管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subOrders" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('orders/index')}" class=''>订单列表</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subTemplates" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Templates"}active{/in}"><i class="fa fa-book"></i> <span>模板管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subTemplates" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>PC端模板</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">手机端模板</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subCharts" data-toggle="collapse" class="collapsed {in name=":request()->controller()" value="Charts"}active{/in}"><i class="fa fa-bar-chart"></i> <span>报表统计</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subCharts" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="{:url('admin/index')}" class=''>统计列表</a></li>
+                                    <li><a href="{:url('admin/add')}" class="">添加权限</a></li>
+                                </ul>
+                            </div>
+                        </li> -->
+                        <!-- <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>Elements</span></a></li>
+                        <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>Charts</span></a></li>
+                        <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>Panels</span></a></li>
+                        <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>Notifications</span></a></li>
+                        <li>
+                            <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages" class="collapse ">
+                                <ul class="nav">
+                                    <li><a href="page-profile.html" class="">Profile</a></li>
+                                    <li><a href="page-login.html" class="">Login</a></li>
+                                    <li><a href="page-lockscreen.html" class="">Lockscreen</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>Tables</span></a></li>
+                        <li><a href="typography.html" class=""><i class="lnr lnr-text-format"></i> <span>Typography</span></a></li>
+                        <li><a href="icons.html" class=""><i class="lnr lnr-linearicons"></i> <span>Icons</span></a></li> -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END LEFT SIDEBAR -->

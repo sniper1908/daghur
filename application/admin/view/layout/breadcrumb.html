@@ -1,0 +1,20 @@
+ 				<div class="row">
+	 				<!-- Breadcrumb -->
+	                <ol class="breadcrumb_customer hidden-xs">
+	                    <li><a href="{:url('index/index')}">Home</a></li>
+	                    {// 面包屑导航}
+	                    {php}
+	                        if(!empty($breadcrumb)):
+	                            foreach($breadcrumb as $v):
+	                                if($v['url']):
+	                                    echo '<li><a href="'.url($v['url']).'">'.$v['name'].'</a></li>';
+	                                else:
+	                                    echo '<li class="active">'.$v['name'].'</li>';
+	                                endif;
+	                            endforeach;
+	                        endif;
+	                    {/php}
+	                </ol>
+	                
+	                <h4 class="page-title_customer">{$title}</h4>
+ 				</div>

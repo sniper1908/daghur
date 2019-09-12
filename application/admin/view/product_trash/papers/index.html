@@ -1,0 +1,45 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('add')}"><span class="label label-primary">添加数据</span></a>
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-1">#</th>
+												<th class="col-md-3">试卷名</th>
+												<th class="col-md-2">科目</th>
+												<th class="col-md-2">类型</th>
+												<th class="col-md-2">难度</th>
+												<th class="col-md-2">管理</th>
+											</tr>
+										</thead>
+										<tbody>
+											{volist name="listData" id="value"}
+											<tr>
+												<td>{$value['id']}</td>
+												<td>{$value['test_name']}</td>
+												<td>{$value->getPaperCat->cat_name ? $value->getPaperCat->cat_name : '--'}</td>
+												<td>{$value->getPaperType->type_name ? $value->getPaperType->type_name : '--'}</td>
+												<td>{$value->getLevel->level_name ? $value->getLevel->level_name : '--'}</td>
+												<td><a href="{:url('paper_questions/index?paper_id='.$value["id"])}"><span class="label label-primary">题目列表</span></a>  <a href="{:url('edit?id='.$value["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									
+									<!-- 分页 -->
+									<div class="media text-center">
+				                        {$listData->render()}
+				                    </div>
+				                    <!-- 分页结束 -->
+				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

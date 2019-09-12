@@ -1,0 +1,102 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="f_name" class="col-md-2 control-label">友链名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[f_name]" class="form-control input-sm validate[required,minSize[2],maxSize[40]]" id="f_name" placeholder="请输入友链名称" value="{:isset($editData['f_name']) ? $editData['f_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="f_url" class="col-md-2 control-label">链接地址</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[f_url]" class="form-control input-sm validate[required,custom[url],minSize[2],maxSize[100]]" id="f_url" placeholder="请输入链接地址" value="{:isset($editData['f_url']) ? $editData['f_url'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort_order" class="col-md-2 control-label">显示顺序</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[sort_order]" class="form-control input-sm validate[required,custom[integer]]" id="sort_order" placeholder="请输入排序数字" value="{:isset($editData['sort_order']) ? $editData['sort_order'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="col-md-2 control-label">友链LOGO</label>
+                            <div class="col-md-10">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-new thumbnail small form-control"></div>
+                                    <div class="fileupload-preview form-control fileupload-exists thumbnail small"></div>
+                                    <span class="btn btn-file btn-alt btn-sm">
+                                        <span class="fileupload-new">选择图片</span>
+                                        <span class="fileupload-exists">更改</span>
+                                        <input type="file" name="upfile" />
+                                    </span>
+                                    &nbsp;&nbsp;{if condition="isset($editData['f_logo']) && $editData['f_logo']"}<img src="../{$editData['f_logo']}" width="45" height="45" data-toggle="modal" data-target="#myArticleImg" />{/if}
+                                    <a href="#" class="btn-sm btn fileupload-exists" data-dismiss="fileupload">移除</a>
+                                </div>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="myArticleImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    {:isset($editData['f_name']) ? $editData['f_name'] : ''}
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {if condition="isset($editData['f_logo']) && $editData['f_logo']"}<img src="../{$editData['f_logo']}" width="300" height="300" />{/if}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 模态框结束 -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_show" class="col-md-2 control-label">是否显示</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="1" type="radio" checked="checked">
+                                    <span><i></i>是</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="0" type="radio" {:isset($editData['is_show'])&&$editData['is_show']!=1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="f_type" class="col-md-2 control-label">友链类型</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[f_type]" value="0" type="radio" checked="checked">
+                                    <span><i></i>文字</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[f_type]" value="1" type="radio" {:isset($editData['f_type'])&&$editData['f_type']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>图片</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

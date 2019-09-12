@@ -1,0 +1,134 @@
+ 				<link href="__APP_BOOTSTRAP__/css/bootstrap-colorpicker.css" rel="stylesheet">
+ 				<style type="text/css">
+					/*#attachWrap , #attachFile , #attachInput {
+						display: none;
+					}*/
+					.select-file-group { margin-top: 6px; }
+					.select-file-group input { display: inline-block; }
+ 				</style>
+ 				<!-- <link href="__APP_BOOTSTRAP__/css/htmleaf-demo.css" rel="stylesheet"> -->
+ 				<!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                	<div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}" enctype="multipart/form-data">
+                    	<div id="myTabContent" class="tab-content">
+                    		<div class="tab-pane fade in active" id="base">
+		                        <div class="form-group">
+		                            <label for="word_name" class="col-md-2 control-label">词汇</label>
+		                            <div class="col-md-10">
+		                                <input type="text" name="data[word_name]" class="form-control input-sm validate[required,minSize[1],maxSize[100]]" id="word_name" placeholder="请输入词汇标音" value="{:isset($editData['word_name']) ? $editData['word_name'] : ''}">
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="word_meaning" class="col-md-2 control-label">汉译</label>
+		                            <div class="col-md-10">
+		                                <input type="text" name="data[word_meaning]" class="form-control input-sm validate[required,minSize[1],maxSize[100]]" id="word_meaning" placeholder="请输入词汇汉译" value="{:isset($editData['word_meaning']) ? $editData['word_meaning'] : ''}">
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="word_eng_symbol" class="col-md-2 control-label">音标</label>
+		                            <div class="col-md-10">
+		                                <input type="text" name="data[word_eng_symbol]" class="form-control input-sm validate[minSize[1],maxSize[100]]" id="word_eng_symbol" placeholder="请输入英语音标" value="{:isset($editData['word_eng_symbol']) ? $editData['word_eng_symbol'] : ''}">
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+		                            <label for="part_of_speech" class="col-md-2 control-label">词性</label>
+		                            <div class="col-md-10">
+		                                <select class="form-control input-sm m-b-10" id="part_of_speech" name="data[part_of_speech]">
+		                                	<option value="0">请选择</option>
+		                                    {volist name="partOfSpeech" id="idx"}
+		                                    <option value="{$key}" {:isset($editData['part_of_speech'])&&($editData['part_of_speech']==$key) ? 'selected="selected"' : ''}>
+		                                    {$idx}</option>
+		                                    {/volist}
+		                                </select>
+		                            </div>
+		                        </div>
+		                        <div class="form-group">
+									<label for="" class="col-md-2 control-label">图片</label>
+									<div class="col-md-10">
+										<div class="fileupload fileupload-new" data-provides="fileupload">
+					                        <div class="fileupload-new thumbnail small form-control"></div>
+					                        <div class="fileupload-preview form-control fileupload-exists thumbnail small"></div>
+					                        <span class="btn btn-file btn-alt btn-sm">
+					                            <span class="fileupload-new">选择图片</span>
+					                            <span class="fileupload-exists">更改</span>
+					                            <input type="file" name="upfile" />
+					                        </span>
+					                        &nbsp;&nbsp;{if condition="isset($editData['word_img']) && $editData['word_img']"}<img src="../{$editData['word_img']}" width="45" height="45" data-toggle="modal" data-target="#myWordImg" />{/if}
+					                        <a href="#" class="btn-sm btn fileupload-exists" data-dismiss="fileupload">移除</a>
+					                    </div>
+									</div>
+		                        </div>
+		                        <!-- 语音 -->
+		                        <!-- 添加 或 编辑并且没有语音数据 -->
+		                        {if condition="($actionName eq 'insert') or ($actionName eq 'update' and empty($voiceList))"}
+		                        <div class="form-group select-file-wrap">
+		                        	<label for="" class="col-md-2 control-label">
+										<a href="javascript:;" onclick="addVoice(this)" class="addVoiceBtn">[+] 语音</a>
+		                        	</label>
+		                        	<div class="col-md-10" class="select-file-group" style="margin-top: 6px;">
+	                        			<select name="dialect[]" class="form-control2">
+	                        				<option value="0">请选择</option>
+	                        				{foreach $dialect as $k=>$v}
+	                        				<option value="{$k}">{$v}</option>
+	                        				{/foreach}
+	                        			</select>
+	                        			<input type="file" name="voiceFile[]" style="display: inline-block;">
+		                        	</div>
+		                        </div>
+		                        {else/}
+		                        {volist name="$voiceList" id="value"}
+								<!-- 编辑 -->
+		                        <div class="form-group select-file-wrap">
+		                        	<label for="" class="col-md-2 control-label">
+		                        		{if condition="$key eq 0"}
+										<a href="javascript:;" onclick="addVoice(this)" class="addVoiceBtn">[+] 语音</a> 
+										{else /}
+										<a href="javascript:;" onclick="reduceVoice(this,'update',{$value['id']})" class="addAttrBtn">[-]&nbsp;语音</a> 
+										{/if}
+		                        	</label>
+		                        	<div class="col-md-10" class="select-file-group" style="margin-top: 6px;">
+	                        			<select name="dialect[]" class="form-control2 change-dialect" onclick="saveDialectId(this,{$value['id']})" onchange="changeDialect(this,{$value['id']})">
+	                        				<option value="0">请选择</option>
+	                        				{foreach $dialect as $k=>$v}
+	                        				<option value="{$k}" {eq name="$value['dialect']" value="$k"}selected="selected"{/eq}>{$v}</option>
+	                        				{/foreach}
+	                        			</select>
+	                        			<input type="file" name="voiceFile[]" style="display: inline-block;">
+	                        			<input type="hidden" class="change-prev-dialect" value="" />
+		                        	</div>
+		                        </div>
+		                        {/volist}
+		                        {/if}
+		                        <div class="form-group">
+		                            <label for="example_sentence" class="col-md-2 control-label">例句</label>
+		                            <div class="col-md-10">
+		                                <textarea class="form-control auto-size input-sm validate[minSize[2],maxSize[255]" id="example_sentence" name="data[example_sentence]" placeholder="请输入例句">{:isset($editData['example_sentence']) ? $editData['example_sentence'] : ''}</textarea>
+		                            </div>
+		                        </div>                        
+		                        <div class="form-group">
+		                            <label for="file_url" class="col-md-2 control-label">例句语音</label>
+		                            <div class="col-md-10">
+		                            	<input type="file" name="attachSentence" id="attachmentSentence" style="margin-top: 3px;" />
+		                            	{if condition="isset($editData['example_sentence_voice']) && $editData['example_sentence_voice']"}
+		                            	<div class="form-bottom-div">已上传</div>
+		                            	{/if}
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <!-- tab-pane-base-end -->
+                    	</div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" id="dictId" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>

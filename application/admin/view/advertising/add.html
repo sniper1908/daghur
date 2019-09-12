@@ -1,0 +1,62 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="adv_name" class="col-md-2 control-label">广告位名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[adv_name]" class="form-control input-sm validate[required,minSize[2],maxSize[40]]" id="adv_name" placeholder="请输入广告位名称" value="{:isset($editData['adv_name']) ? $editData['adv_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adv_desc" class="col-md-2 control-label">广告位描述</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[adv_desc]" class="form-control input-sm" id="adv_desc" placeholder="请输入广告位描述" value="{:isset($editData['adv_desc']) ? $editData['adv_desc'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adv_width" class="col-md-2 control-label">广告位宽度</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="data[adv_width]" class="form-control input-sm validate[required,custom[integer]]" id="adv_width" placeholder="请输入一个数字" value="{:isset($editData['adv_width']) ? $editData['adv_width'] : ''}">
+                                    <span class="input-group-addon">PX</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="adv_height" class="col-md-2 control-label">广告位高度</label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="data[adv_height]" class="form-control input-sm validate[required,custom[integer]]" id="adv_height" placeholder="请输入一个数字" value="{:isset($editData['adv_height']) ? $editData['adv_height'] : ''}">
+                                    <span class="input-group-addon">PX</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="is_show" class="col-md-2 control-label">是否显示</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="1" type="radio" checked="checked">
+                                    <span><i></i>是</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[is_show]" value="0" type="radio" {:isset($editData['is_show'])&&$editData['is_show']!=1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>否</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

@@ -1,0 +1,99 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<!-- <div class="panel-heading">
+									<h3 class="panel-title">Hover Row</h3>
+								</div> -->
+								<div class="panel-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>分类名</th>
+												<th>所属分类</th>
+												<th>导航栏显示</th>
+												<th>排序</th>
+												<th>管理</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php getArticleCatTempList($catTree);?>
+											{volist name="catTree" id='cat'}
+											<tr>
+												<td>{$cat['id']}</td>
+												<td>|-{:str_repeat('-',$cat['level'])}{$cat['cat_name']}</td>
+												<td>{$cat['parent_name']}</td>
+												<td>{if condition="$cat['show_in_nav'] eq 1"}是{else}否{/if}</td>
+												<td>{$cat['sort_order']}</td>
+												<td><a href="{:url('edit?id='.$cat["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$cat["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{notempty name="cat['children']"}
+												{volist name="cat['children']" id='child'}
+											<tr>
+												<td>{$child['id']}</td>
+												<td>|-{:str_repeat('-',$child['level']*2)}{$child['cat_name']}</td>
+												<td>{$child['parent_name']}</td>
+												<td>{if condition="$child['show_in_nav'] eq 1"}是{else}否{/if}</td>
+												<td>{$child['sort_order']}</td>
+												<td><a href="{:url('edit?id='.$child["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$child["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{notempty name="child['children']"}
+												{volist name="child['children']" id='grand'}
+											<tr>
+												<td>{$grand['id']}</td>
+												<td>|-{:str_repeat('-',$grand['level']*2)}{$grand['cat_name']}</td>
+												<td>{$grand['parent_name']}</td>
+												<td>{if condition="$grand['show_in_nav'] eq 1"}是{else}否{/if}</td>
+												<td>{$grand['sort_order']}</td>
+												<td><a href="{:url('edit?id='.$grand["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$grand["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+												{/volist}
+											{/notempty}
+												{/volist}
+											{/notempty}
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									
+									<!-- 分页 -->
+									<div class="media text-center">
+				                        <ul class="pagination">
+				                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+				                            <li><a href="#">1</a></li>
+				                            <li><a href="#">2</a></li>
+				                            <li><a href="#">3</a></li>
+				                            <li><a href="#">4</a></li>
+				                            <li><a href="#">5</a></li>
+				                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+				                        </ul>
+				                    </div>
+				                    <!-- 分页结束 -->
+				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->
+							<?php
+								function getArticleCatTempList($list){
+									foreach($list as $cat):
+									$str = '';
+										$str .= '<tr>';
+										$str .= '<td>'.$cat['id'].'</td>';
+										$str .= '<td>|-'.str_repeat('-',$cat['level']).$cat['cat_name'].'</td>';
+										$str .= '<td>'.$cat['parent_name'].'</td>';
+										$str .= '<td>';
+										$str .= $cat['show_in_nav']==1 ? '是' : '否';
+										$str .= '</td>';
+										$str .= '<td>'.$cat['sort_order'].'</td>';
+										$str .= '<td>';
+										$str .= '<a href="'.url('edit?id='.$cat["id"]).'"><span class="label label-primary">编辑</span></a>  ';
+										$str .= '<a href="'.url('del?id='.$cat["id"]).'"><span class="label label-danger">删除</span></a>';
+										$str .= '</td>';
+										$str .= '</tr>';
+										echo $str;
+										if(!empty($cat['children'])):
+											getArticleCatTempList($cat['children']);
+										endif;
+									endforeach;
+								}
+							?>

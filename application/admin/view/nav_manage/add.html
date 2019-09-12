@@ -1,0 +1,74 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="nav_name" class="col-md-2 control-label">导航名称</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[nav_name]" class="form-control input-sm validate[required,minSize[2],maxSize[20]]" id="nav_name" placeholder="请输入导航名称" value="{:isset($editData['nav_name']) ? $editData['nav_name'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nav_url" class="col-md-2 control-label">链接地址</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[nav_url]" class="form-control input-sm validate[required,minSize[2],maxSize[100]]" id="nav_name" placeholder="请输入导航链接地址" value="{:isset($editData['nav_url']) ? $editData['nav_url'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nav_type" class="col-md-2 control-label">导航位置</label>
+                            <div class="col-md-10">
+                                {foreach $navType as $k=>$val}
+                                <label class="fancy-radio2 radio-inline-block">
+                                    <input name="data[nav_type]" value="{$k}" type="radio" {:isset($editData['nav_type'])&&$editData['nav_type']==$k || (!isset($editData['nav_type']) && $k=='top') ? 'checked="checked"' : ''}>
+                                    <span><b style="font-weight: normal;font-size: 13px;">{$val}</b></span>
+                                </label>
+                                {/foreach}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort_order" class="col-md-2 control-label">显示顺序</label>
+                            <div class="col-md-10">
+                                <input type="text" name="data[sort_order]" class="form-control input-sm validate[required,custom[integer]]" id="sort_order" placeholder="请输入排序数字" value="{:isset($editData['sort_order']) ? $editData['sort_order'] : ''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="if_show" class="col-md-2 control-label">是否显示</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[if_show]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[if_show]" value="1" type="radio" {:isset($editData['if_show'])&&$editData['if_show']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="open_new" class="col-md-2 control-label">是否新窗口打开</label>
+                            <div class="col-md-10">
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[open_new]" value="0" type="radio" checked="checked">
+                                    <span><i></i>否</span>
+                                </label>
+                                <label class="fancy-radio radio-inline-block">
+                                    <input name="data[open_new]" value="1" type="radio" {:isset($editData['open_new'])&&$editData['open_new']==1 ? 'checked="checked"' : ''}>
+                                    <span><i></i>是</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />

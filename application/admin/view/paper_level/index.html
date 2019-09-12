@@ -1,0 +1,47 @@
+							<!-- TABLE HOVER -->
+							<div class="panel">
+								<div class="panel-heading">
+									<p class="panel-title pull-right">
+										<a href="{:url('add')}"><span class="label label-primary">添加数据</span></a>
+									</p>
+                        			<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-2">#</th>
+												<th class="col-md-8">难度名</th>
+												<th class="col-md-2">管理</th>
+											</tr>
+										</thead>
+										<tbody>
+											{volist name="listData" id="value"}
+											<tr>
+												<td>{$value['id']}</td>
+												<td>{$value['level_name']}</td>
+												<td><a href="{:url('edit?id='.$value["id"])}"><span class="label label-primary">编辑</span></a>  <a href="{:url('del?id='.$value["id"])}"><span class="label label-danger">删除</span></a></td>
+											</tr>
+											{/volist}
+										</tbody>
+									</table>
+								</div>
+								<div class="panel-footer">
+									
+									<!-- 分页 -->
+									<!-- <div class="media text-center">
+				                        <ul class="pagination">
+				                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+				                            <li><a href="#">1</a></li>
+				                            <li><a href="#">2</a></li>
+				                            <li><a href="#">3</a></li>
+				                            <li><a href="#">4</a></li>
+				                            <li><a href="#">5</a></li>
+				                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+				                        </ul>
+				                    </div> -->
+				                    <!-- 分页结束 -->
+				                    
+								</div>
+							</div>
+							<!-- END TABLE HOVER -->

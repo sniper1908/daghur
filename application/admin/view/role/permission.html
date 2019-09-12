@@ -1,0 +1,49 @@
+                <!-- Horizontal -->
+                <div class="block-area" id="horizontal">
+                    <div class="block-title">
+                        <p class="pull-right">
+                            <a href="{:url('index')}"><span class="label label-primary">返回列表</span></a>
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- <h3 class="block-title">{$title}</h3> -->
+                    <form class="form-horizontal form-validation-9"" role="form" method="post" action="{:url($actionName)}">
+                        <div class="form-group">
+                            <label for="role_name" class="col-md-2 control-label">角色名称</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control input-sm" id="role_name" value="{$editData['role_name']}" disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="role_desc" class="col-md-2 control-label">角色权限</label>
+                            <div class="col-md-10" style="margin-top: 7px;">
+                                {volist name="tree" id='value'}
+                                    <div class="permission-parent">
+                                        <label class="">
+                                            <input type="checkbox" class="permission-parent-input" id="permission-{$value['id']}"> {$value['permission_name']}
+                                        </label>
+                                    </div>
+                                    <hr class="whiter m-t-20" style="margin-top: 5px;margin-bottom: 15px;" />
+                                    {notempty name="value['children']"}
+                                    <div class="row" style="padding: 0 25px 0;">
+                                        {volist name="value['children']" id='val'}
+                                            <label class="col-md-2" style="font-weight: 10;font-size: 13px;">
+                                                <input type="checkbox" name="data[{$value['id']}][]" value="{$val['id']}" class="permission-child permission-parent-{$value['id']}" id="permission-child-{$val['id']}" data-parent-id="{$value['id']}" {php}echo (isset($editData['role_permission'][$value['id']]) && !empty($editData['role_permission'][$value['id']])) && (in_array($val['id'],$editData['role_permission'][$value['id']])) ? ' checked="checked" ' : '';{/php}> {$val['permission_name']}
+                                            </label>
+                                        {/volist}
+                                    </div>
+                                    {/notempty}
+                                    <hr class="whiter m-t-20" style="margin-top: 10px;" />
+                                {/volist}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="hidden" name="id" value="{$id}">
+                                <button type="submit" class="btn btn-info btn-sm m-t-10">提 交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <hr class="whiter m-t-20" />
